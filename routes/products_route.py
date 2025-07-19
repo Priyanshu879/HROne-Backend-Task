@@ -27,7 +27,7 @@ async def get_products(
     if size:
         query["sizes.size"] = {"$regex": size, "$options": "i"}
 
-    products_res = db.products.find(query).skip(offset).limit(limit)
+    products_res = db.products.find(query, {"sizes":0}).skip(offset).limit(limit)
     products = [Product.to_json(product) async for product in products_res]
 
     return {
